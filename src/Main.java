@@ -41,7 +41,8 @@ public class Main {
            }
 
        } while(userChoice != 4);
-
+       scanner.close();
        }
+
 
    }
