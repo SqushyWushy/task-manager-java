@@ -23,6 +23,6 @@ public class TaskManager {
     }
 
     void completeTask(int index){
-        tasks.get(index - 1).completed = true;
+        tasks.get(index).completed = true;
     }
 }
