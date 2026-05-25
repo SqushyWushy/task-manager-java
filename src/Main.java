@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -15,7 +16,6 @@ public class Main {
            System.out.println("4. Quit");
            System.out.print("Choose an option: ");
            userChoice = scanner.nextInt();
-           System.out.println(userChoice);
            scanner.nextLine();
 
            if (userChoice == 1) {
@@ -23,13 +23,24 @@ public class Main {
                String userTask = scanner.nextLine();
                manager.addTask(userTask);
                System.out.println("The following task has been added:");
-               System.out.printf("[] %s", userTask);
+               System.out.printf("[✗] %s", userTask);
                System.out.println();
            }
 
+           if (userChoice == 2){
+               System.out.println("All tasks shown below: ");
+               manager.showTasks();
+           }
+
+           if (userChoice == 3){
+               manager.showTasks();
+               System.out.print("Which task would you like to mark complete? ");
+               int markComplete = scanner.nextInt();
+               manager.completeTask(markComplete);
+               manager.showTasks();
+           }
+
        } while(userChoice != 4);
-
-
 
        }
 
