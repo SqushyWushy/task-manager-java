@@ -1,5 +1,9 @@
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.File;
 
 public class TaskManager {
     ArrayList<Task> tasks;
@@ -28,6 +32,7 @@ public class TaskManager {
     }
 
     void run(){
+        loadTasks();
         Scanner scanner = new Scanner(System.in);
         int userChoice;
 
@@ -85,6 +90,7 @@ public class TaskManager {
             }
             else if (userChoice == 4){
                 System.out.println("Stay organized out there! Enjoy your day!");
+                saveTasks();
             }
             else{
                 System.out.println("Please enter a valid number.");
@@ -93,4 +99,41 @@ public class TaskManager {
         } while(userChoice != 4);
         scanner.close();
     }
+
+    void saveTasks(){
+        try{
+            FileWriter writer = new FileWriter("tasks.txt");
+            for (Task t : tasks){
+                writer.write(t.title + "," + t.completed + "\n");
+            }
+            writer.close();
+        } catch (IOException e){
+            System.out.println("Error saving tasks.");
+        }
+    }
+
+    void loadTasks(){
+        try{
+            File file = new File("tasks.txt");
+            if (!file.exists()){
+                return;
+            }
+            Scanner fileScanner = new Scanner(file);
+            while (fileScanner.hasNextLine()){
+                String line = fileScanner.nextLine();
+                String[] parts = line.split(",");
+                String title = parts[0];
+                boolean completed = Boolean.parseBoolean(parts[1]);
+                Task t = new Task(title);
+                t.completed = completed;
+                tasks.add(t);
+            }
+
+            fileScanner.close();
+
+        } catch (IOException e){
+            System.out.println("Error loadings tasks.");
+        }
+    }
+
     }
